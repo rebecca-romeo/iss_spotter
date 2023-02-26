@@ -37,14 +37,14 @@ const  fetchCoordsByIP = function(ip, callback) {
       return;
     }
 
-      const latitude = parsedBody.latitude;
-      const longitude = parsedBody.longitude;
-      const latAndLong = {
-        latitude,
-        longitude
-      };
-      callback(null, latAndLong);
-      return;
+    const latitude = parsedBody.latitude;
+    const longitude = parsedBody.longitude;
+    const latAndLong = {
+      latitude,
+      longitude
+    };
+    callback(null, latAndLong);
+    return;
 
     // cleaner version from toggle answer, uses destructuring:
     // const { latitude, longitude } = parsedBody;
@@ -105,7 +105,7 @@ const nextISSTimesForMyLocation = function(callback) {
       });
     });
   });
-}
+};
 
 
 
@@ -116,43 +116,3 @@ module.exports = {
   nextISSTimesForMyLocation
 };
 
-
-
-
-//--------------------------------------------------------------------
-// cleaner version of response status to replace the if/else in fetchIp function
-
-// if (response.statusCode !== 200) {
-//   callback(Error(`Status Code ${response.statusCode} when fetching IP: ${body}`), null);
-//   return;
-// }
-
-// const ip = JSON.parse(body).ip;
-// callback(null, ip);
-
-//--------------------------------------------------------------------
-
-
-
-
-
-// use request to fetch IP address from JSON API
-// request('https://api.ipify.org?format=json', (error, response, body) => {
-
-//   console.log("ip address is:", body)
-// });
-
-//https://api.ipify.org?format=json
-
-/**
- * Makes a single API request to retrieve the user's IP address.
- * Input:
- *   - A callback (to pass back an error or the IP string)
- * Returns (via Callback):
- *   - An error, if any (nullable)
- *   - The IP address as a string (null if error). Example: "162.245.144.188"
- */
-
-// console.log('error:', error); // Print the error if one occurred
-// console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-// console.log('body:', body); // Print the HTML for the Google homepage.

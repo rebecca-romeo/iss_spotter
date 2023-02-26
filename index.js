@@ -13,6 +13,6 @@ nextISSTimesForMyLocation((error, passTimes) => {
 
   // success, print out the deets!
   passTimes.forEach(item => {
-    console.log( `Next pass at ${Date(item.risetime * 1000)} for ${item.duration} seconds!`)
-  })
+    console.log(`Next pass at ${Date(item.risetime * 1000)} for ${item.duration} seconds!`);
+  });
 });
