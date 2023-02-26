@@ -73,14 +73,46 @@ const fetchISSFlyOverTimes = function(coords, callback) {
 
 const nextISSTimesForMyLocation = function(callback) {
   // empty for now
+
+  // Fetch ip address
+  fetchMyIP((error, ip) => {
+    if (error) {
+      console.log("Getting the IP didn't work" , error);
+      return;
+    }
+
+    // console.log('Getting the IP worked. Returned IP:' , ip);
+
+
+    // fetch geo cords
+    fetchCoordsByIP(ip, (error, coordinates) => {
+      if (error) {
+        console.log("Getting the geo cords didn't work" , error);
+        return;
+      }
+
+      // console.log('Getting the geo cords worked. Here is the lat and long:' , coordinates);
+
+      // const coords = { latitude: '49.27670', longitude: '-123.13000' }
+      fetchISSFlyOverTimes(coordinates, (error, passTimes) => {
+        if (error) {
+          console.log("Getting the fly times didn't work" , error);
+          return;
+        }
+
+        // console.log('Getting the fly times worked', passTimes);
+        callback(null, passTimes);
+      });
+    });
+  });
 }
 
 
 
 module.exports = {
-  fetchMyIP,
-  fetchCoordsByIP,
-  fetchISSFlyOverTimes,
+  // fetchMyIP,
+  // fetchCoordsByIP,
+  // fetchISSFlyOverTimes,
   nextISSTimesForMyLocation
 };
 
