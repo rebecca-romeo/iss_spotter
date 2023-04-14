@@ -28,7 +28,7 @@ const fetchMyIP = function(callback) {
 
 
 // Geolocation coordinates
-const  fetchCoordsByIP = function(ip, callback) {
+const fetchCoordsByIP = function(ip, callback) {
   request(`http://ipwho.is/${ip}`, (error, response, body) => {
     if (error) {
       return callback(error, null);
@@ -44,7 +44,7 @@ const  fetchCoordsByIP = function(ip, callback) {
 
     const latitude = parsedBody.latitude;
     const longitude = parsedBody.longitude;
-    return callback(null, {latitude, longitude});
+    return callback(null, { latitude, longitude });
 
     // cleaner version from toggle answer, uses destructuring:
     // const { latitude, longitude } = parsedBody;
@@ -52,8 +52,26 @@ const  fetchCoordsByIP = function(ip, callback) {
 };
 
 
+// Fetch Flyover times
+const fetchISSFlyOverTimes = function(coords, callback) {
+  request(`https://iss-flyover.herokuapp.com/json/?lat=${coords.latitude}&lon=${coords.longitude}`, (error, response, body) => {
+    if (error) {
+      return callback(error, null);
+    }
+
+    if (response.statusCode !== 200) {
+      return callback(Error(`Status Code ${response.statusCode} when fetching ISS pass times: ${body}`), null);
+    }
+
+    const passes = JSON.parse(body).response;
+    callback(null, passes);
+  });
+};
+
+
 module.exports = {
   fetchMyIP,
-  fetchCoordsByIP
+  fetchCoordsByIP,
+  fetchISSFlyOverTimes
 };
 
